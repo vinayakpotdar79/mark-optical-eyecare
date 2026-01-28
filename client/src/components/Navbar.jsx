@@ -13,7 +13,7 @@ export default function Navbar({ cartCount, onCartClick }) {
             <span className="text-xl font-bold text-white tracking-wider">
               <BlurText
                 text="Mark Optical"
-                delay={200}
+                delay={100}
                 animateBy="letters"
                 direction="top"
               />
