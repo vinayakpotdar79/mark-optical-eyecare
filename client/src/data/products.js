@@ -92,7 +92,7 @@ export const products = [
     price: 1500,
     category: "Contact Lenses",
     image:
-      "https://plus.unsplash.com/premium_photo-1675806637389-9fc01311099f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1599114317549-8d4e5233021f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29udGFjdCUyMGxlbnN8ZW58MHx8MHx8fDA%3D",
     description: "Protect your eyes from digital strain.",
   },
   {
@@ -101,7 +101,7 @@ export const products = [
     price: 2200,
     category: "Contact Lenses",
     image:
-      "https://images.unsplash.com/photo-1627916607164-7b6924cb912a?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582143434535-eba55a806718?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Hygienic and convenient daily wear lenses.",
   },
   {
@@ -110,7 +110,7 @@ export const products = [
     price: 1800,
     category: "Contact Lenses",
     image:
-      "https://images.unsplash.com/photo-1596701062351-8b2c1436639c?auto=format&fit=crop&w=800&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwEUh9N_-P6f9z_ccNu1o9FG__yJWPP5nVHQ&s",
     description: "Enhance your eye color with natural shades.",
   },
 ];
