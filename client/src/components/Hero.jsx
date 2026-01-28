@@ -1,6 +1,7 @@
 import { motion as M1 } from "framer-motion";
 import VariableProximity from "./VariableProximity";
 import { useRef } from "react";
+import ShinyText from "./ShinyText";
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -47,9 +48,33 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
-          Premium eyewear for the modern visionary.{" "}
+          {/* Premium eyewear for the modern visionary.{" "} */}
+          <ShinyText
+            text="Premium eyewear for the modern visionary."
+            speed={2}
+            delay={0}
+            color="#b5b5b5"
+            shineColor="#ffffff"
+            spread={120}
+            direction="left"
+            yoyo={false}
+            pauseOnHover={false}
+            disabled={false}
+          />
           <br className="hidden md:block" />
-          Experience comfort, style, and precision with Mark Optical Co.
+
+          <ShinyText
+            text="Experience comfort, style, and precision with Mark Optical Co."
+            speed={2}
+            delay={0}
+            color="#b5b5b5"
+            shineColor="#ffffff"
+            spread={120}
+            direction="left"
+            yoyo={false}
+            pauseOnHover={false}
+            disabled={false}
+          />
         </M1.p>
 
         <M1.div

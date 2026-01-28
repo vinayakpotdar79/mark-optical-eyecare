@@ -4,12 +4,12 @@ import SectionReveal from "./SectionReveal";
 import { products } from "../data/products";
 
 export default function Shop({ addToCart }) {
-  const [filter, setFilter] = useState("Spectacles");
+  const [filter, setFilter] = useState("Sunglasses");
 
   const filteredProducts =
     filter === "All" ? products : products.filter((p) => p.category === filter);
 
-  const categories = ["All", "Spectacles", "Sunglasses", "Contact Lenses"];
+  const categories = ["All", "Sunglasses", "Spectacles", "Contact Lenses"];
 
   return (
     <section id="shop" className="py-24 bg-gray-50">
