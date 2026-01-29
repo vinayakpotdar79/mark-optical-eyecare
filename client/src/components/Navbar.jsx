@@ -5,6 +5,19 @@ import BlurText from "./BlurText";
 export default function Navbar({ cartCount, onCartClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const scrollToSection = (e, id) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    } else {
+      // If not on home page, could navigate to / and then scroll
+      const hash = id === "home" ? "/" : `/#/${id}`;
+      window.location.href = hash;
+    }
+  };
+
   return (
     <nav className="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,36 +34,36 @@ export default function Navbar({ cartCount, onCartClick }) {
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-            <a
-              href="#"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest"
+            <button
+              onClick={(e) => scrollToSection(e, "home")}
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest cursor-pointer bg-transparent border-none appearance-none"
             >
               Home
-            </a>
-            <a
-              href="#shop"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest"
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "shop")}
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest cursor-pointer bg-transparent border-none appearance-none"
             >
               Shop
-            </a>
-            <a
-              href="#services"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest"
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "services")}
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest cursor-pointer bg-transparent border-none appearance-none"
             >
               Services
-            </a>
-            <a
-              href="#about"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest"
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "about")}
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest cursor-pointer bg-transparent border-none appearance-none"
             >
               About
-            </a>
-            <a
-              href="#contact"
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest"
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "contact")}
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-widest cursor-pointer bg-transparent border-none appearance-none"
             >
               Contact
-            </a>
+            </button>
           </div>
 
           <div className="hidden md:block">
@@ -85,41 +98,36 @@ export default function Navbar({ cartCount, onCartClick }) {
       {isOpen && (
         <div className="md:hidden bg-black border-b border-white/10 absolute w-full left-0 top-16 shadow-xl">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a
-              href="#"
-              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsOpen(false)}
+            <button
+              onClick={(e) => scrollToSection(e, "home")}
+              className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-transparent border-none appearance-none"
             >
               Home
-            </a>
-            <a
-              href="#shop"
-              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsOpen(false)}
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "shop")}
+              className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-transparent border-none appearance-none"
             >
               Shop
-            </a>
-            <a
-              href="#services"
-              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsOpen(false)}
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "services")}
+              className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-transparent border-none appearance-none"
             >
               Services
-            </a>
-            <a
-              href="#about"
-              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsOpen(false)}
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "about")}
+              className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-transparent border-none appearance-none"
             >
               About
-            </a>
-            <a
-              href="#contact"
-              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsOpen(false)}
+            </button>
+            <button
+              onClick={(e) => scrollToSection(e, "contact")}
+              className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-transparent border-none appearance-none"
             >
               Contact
-            </a>
+            </button>
           </div>
         </div>
       )}

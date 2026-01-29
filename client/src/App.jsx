@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import {
   HashRouter as Router,
   Routes,
@@ -23,7 +24,29 @@ function AppContent() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Scroll to section when route changes
+  useEffect(() => {
+    const hash = window.location.hash;
+    const path = window.location.pathname;
+
+    // HashRouter matches /shop as path "/shop"
+    // We want to scroll to the element with id "shop" etc.
+    const sectionId = path === "/" ? "" : path.substring(1);
+
+    if (sectionId) {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else if (path === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [window.location.hash, window.location.pathname]);
+
   const addToCart = (product) => {
+    // ... (rest of the component)
     setCart([...cart, product]);
     setIsCartOpen(true);
   };
@@ -44,28 +67,31 @@ function AppContent() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="bg-black min-h-screen text-white flex flex-col">
-              <Navbar
-                cartCount={cart.length}
-                onCartClick={() => setIsCartOpen(true)}
-              />
-              <Hero />
-              <Brands />
-              <div className="grow bg-white">
-                <Features />
-                <Shop addToCart={addToCart} />
-                <Services />
-                <Testimonials />
-                <About />
-                <Contact />
+        {["/", "/shop", "/services", "/about", "/contact"].map((path) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <div className="bg-black min-h-screen text-white flex flex-col">
+                <Navbar
+                  cartCount={cart.length}
+                  onCartClick={() => setIsCartOpen(true)}
+                />
+                <Hero />
+                <Brands />
+                <div className="grow bg-white">
+                  <Features />
+                  <Shop addToCart={addToCart} />
+                  <Services />
+                  <Testimonials />
+                  <About />
+                  <Contact />
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-          }
-        />
+            }
+          />
+        ))}
         <Route
           path="/checkout"
           element={<Checkout cart={cart} clearCart={clearCart} />}

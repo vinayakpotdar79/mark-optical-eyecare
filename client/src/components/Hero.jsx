@@ -7,7 +7,7 @@ export default function Hero() {
   const containerRef = useRef(null);
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
