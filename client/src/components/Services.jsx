@@ -27,14 +27,15 @@ const services = [
 
 export default function Services() {
     return (
-        <section id="services" className="py-24 bg-gray-50">
+        <section id="services" className="py-24 bg-zinc-50 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionReveal>
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Our Services</h2>
+                        <span className="text-indigo-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our Expertise</span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Premium Eye Care Services</h2>
                         <div className="w-24 h-1 bg-black mx-auto rounded-full"></div>
                         <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-                            Beyond selling eyewear, we provide comprehensive eye care solutions tailored to your needs.
+                            Beyond standard vision correction, we provide comprehensive eye health solutions using the latest diagnostic technology.
                         </p>
                     </div>
                 </SectionReveal>
@@ -42,15 +43,19 @@ export default function Services() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {services.map((service, index) => (
                         <SectionReveal key={index} delay={index * 0.1}>
-                            <div className="bg-white p-10 rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300 group flex flex-col sm:flex-row items-start gap-6">
-                                <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                                    {service.icon}
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">{service.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed text-lg">
-                                        {service.description}
-                                    </p>
+                            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500 z-0"></div>
+
+                                <div className="relative z-10 flex flex-col sm:flex-row items-start gap-8">
+                                    <div className="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-indigo-600 transition-all duration-300 flex-shrink-0">
+                                        {service.icon}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">{service.title}</h3>
+                                        <p className="text-gray-600 leading-relaxed text-lg">
+                                            {service.description}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </SectionReveal>

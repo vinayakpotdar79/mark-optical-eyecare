@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Brands from "./components/Brands";
 import Features from "./components/Features";
 import Shop from "./components/Shop";
 import Services from "./components/Services";
@@ -52,6 +53,7 @@ function AppContent() {
                 onCartClick={() => setIsCartOpen(true)}
               />
               <Hero />
+              <Brands />
               <div className="grow bg-white">
                 <Features />
                 <Shop addToCart={addToCart} />
@@ -82,8 +84,11 @@ function AppContent() {
 }
 
 function App() {
+  // Strip trailing slash from BASE_URL for React Router consistency
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
+
   return (
-    <Router>
+    <Router basename={basename}>
       <AppContent />
     </Router>
   );
