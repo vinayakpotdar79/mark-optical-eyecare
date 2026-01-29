@@ -6,6 +6,15 @@ import ShinyText from "./ShinyText";
 export default function Hero() {
   const containerRef = useRef(null);
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/#/${id}`;
+    }
+  };
+
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -83,18 +92,18 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="#shop"
-            className="inline-block bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
+          <button
+            onClick={() => scrollToSection("shop")}
+            className="inline-block bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer"
           >
             Shop Collection
-          </a>
-          <a
-            href="#contact"
-            className="inline-block bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all duration-300"
+          </button>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="inline-block bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all duration-300 cursor-pointer"
           >
             Book Eye Test
-          </a>
+          </button>
         </M1.div>
       </div>
     </section>
