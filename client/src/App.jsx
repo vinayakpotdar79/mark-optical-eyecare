@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   useNavigate,
@@ -84,11 +84,8 @@ function AppContent() {
 }
 
 function App() {
-  // Strip trailing slash from BASE_URL for React Router consistency
-  const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
-
   return (
-    <Router basename={basename}>
+    <Router>
       <AppContent />
     </Router>
   );
