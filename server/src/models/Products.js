@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const imageSchema = new mongoose.Schema(
+  {
+    public_id: String,
+    url: String,
+  },
+  { _id: false },
+);
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -29,6 +37,7 @@ const productSchema = new mongoose.Schema(
       ref: "SubCategory",
       required: true,
     },
+    images: [imageSchema],
     stock: {
       type: Number,
       default: 0,
