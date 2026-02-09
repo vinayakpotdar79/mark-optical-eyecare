@@ -81,3 +81,46 @@ export const createProduct = async (req, res) => {
     res.status(500).json({ message: err.message || "Product creation failed" });
   }
 };
+
+// get single product
+export const getProductBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const product = await Product.findOne({
+      slug,
+      isActive: true,
+    })
+      .populate("category", "name slug")
+      .populate("subCategory", "name slug");
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch product" });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const product = await Product.findOne({ slug });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    await Promise.all(
+      product.images.map((img) => cloudinary.uploader.destroy(img.public_id)),
+    );
+
+    await product.deleteOne();
+
+    res.json({ success: true, message: "Product deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Product deletion failed" });
+  }
+};
