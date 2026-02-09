@@ -16,7 +16,10 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
@@ -57,16 +60,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
-          {/* Premium eyewear for the modern visionary.{" "} */}
           <ShinyText
             text="Premium eyewear for the modern visionary."
-            speed={2}
+            speed={3}
             delay={0}
             color="#b5b5b5"
             shineColor="#ffffff"
             spread={120}
             direction="left"
-            yoyo={false}
+            yoyo={true}
             pauseOnHover={false}
             disabled={false}
           />
@@ -74,13 +76,13 @@ export default function Hero() {
 
           <ShinyText
             text="Experience comfort, style, and precision with Mark Optical Co."
-            speed={2}
+            speed={3}
             delay={0}
             color="#b5b5b5"
             shineColor="#ffffff"
             spread={120}
-            direction="left"
-            yoyo={false}
+            direction="right"
+            yoyo={true}
             pauseOnHover={false}
             disabled={false}
           />
