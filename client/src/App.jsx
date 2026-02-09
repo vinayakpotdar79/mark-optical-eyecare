@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Brands from "./components/Brands";
@@ -23,13 +18,13 @@ function AppContent() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Scroll to section when route changes
   useEffect(() => {
-    const hash = window.location.hash;
-    const path = window.location.pathname;
+    // Matches /shop as path "/shop" in location.pathname
+    const path = location.pathname;
 
-    // HashRouter matches /shop as path "/shop"
     // We want to scroll to the element with id "shop" etc.
     const sectionId = path === "/" ? "" : path.substring(1);
 

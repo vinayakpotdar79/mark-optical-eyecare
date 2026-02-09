@@ -11,7 +11,7 @@ export default function Hero() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.location.href = `/#/${id}`;
+      window.location.href = `/${id}`;
     }
   };
 

@@ -13,8 +13,8 @@ export default function Navbar({ cartCount, onCartClick }) {
       setIsOpen(false);
     } else {
       // If not on home page, could navigate to / and then scroll
-      const hash = id === "home" ? "/" : `/#/${id}`;
-      window.location.href = hash;
+      const path = id === "home" ? "/" : `/${id}`;
+      window.location.href = path;
     }
   };
 
