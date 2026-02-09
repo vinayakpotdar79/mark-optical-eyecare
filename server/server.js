@@ -13,6 +13,10 @@ app.use("/api/v1/admin", productsRoute);
 app.use("/api/v1/admin", categoryRoute);
 app.use("/api/v1/admin", subcategoryRoute);
 
+app.get("/test", (_, res) => {
+  res.status(200).json("Api working fine..");
+});
+
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
