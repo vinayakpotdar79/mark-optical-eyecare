@@ -8,7 +8,7 @@ export const createProduct = async (req, res) => {
   const uploadPublicIds = [];
 
   try {
-    const { name, price, description, categoryName, subCategoryName } =
+    const { name, price, description, categoryName, stock, subCategoryName } =
       req.body;
 
     if (!name || !price || !categoryName || !subCategoryName) {
@@ -66,6 +66,7 @@ export const createProduct = async (req, res) => {
       category: category._id,
       subCategory: subCategory._id,
       images,
+      stock,
       isActive: true,
     });
 
@@ -104,6 +105,19 @@ export const getProductBySlug = async (req, res) => {
   }
 };
 
+// get all products
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({ isActive: true })
+      .populate("category", "name slug")
+      .populate("subCategory", "name slug");
+
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch products" });
+  }
+};
+//delete a product
 export const deleteProduct = async (req, res) => {
   try {
     const { slug } = req.params;
