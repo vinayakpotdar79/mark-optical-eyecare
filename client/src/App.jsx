@@ -13,10 +13,17 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import CartDrawer from "./components/CartDrawer";
 import Checkout from "./components/Checkout";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/Dashboard";
+import ProductForm from "./pages/admin/ProductForm";
+import CategoryManager from "./pages/admin/CategoryManager";
+import Setting from "./pages/admin/Setting";
 
 function AppContent() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const admin = true;
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -91,6 +98,18 @@ function AppContent() {
           path="/checkout"
           element={<Checkout cart={cart} clearCart={clearCart} />}
         />
+        {admin && (
+          <>
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<AdminDashboard />} />
+              <Route path="products/new" element={<ProductForm />} />
+              <Route path="categories" element={<CategoryManager />} />
+              <Route path="settings" element={<Setting />} />
+            </Route>
+          </>
+        )}
       </Routes>
 
       <CartDrawer
