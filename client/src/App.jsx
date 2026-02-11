@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import ProductForm from "./pages/admin/ProductForm";
 import CategoryManager from "./pages/admin/CategoryManager";
 import Setting from "./pages/admin/Setting";
+import Catalog from "./pages/Catalog";
 
 function AppContent() {
   const [cart, setCart] = useState([]);
@@ -94,6 +95,21 @@ function AppContent() {
             }
           />
         ))}
+        <Route
+          path="/collection"
+          element={
+            <div className="bg-white min-h-screen flex flex-col">
+              <Navbar
+                cartCount={cart.length}
+                onCartClick={() => setIsCartOpen(true)}
+              />
+              <div className="grow">
+                <Catalog addToCart={addToCart} />
+              </div>
+              <Footer />
+            </div>
+          }
+        />
         <Route
           path="/checkout"
           element={<Checkout cart={cart} clearCart={clearCart} />}
