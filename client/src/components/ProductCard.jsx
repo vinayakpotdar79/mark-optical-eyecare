@@ -2,7 +2,9 @@ import { useState } from "react";
 import { ShoppingCart, Zap } from "lucide-react";
 
 export default function ProductCard({ product, addToCart }) {
-  const [imgSrc, setImgSrc] = useState(product.image);
+  const img = product.images ? product.images[0].url : product.image;
+  // console.log(img);
+  const [imgSrc, setImgSrc] = useState(img);
 
   const handleBuyNow = (product) => {
     addToCart(product);
@@ -42,7 +44,7 @@ export default function ProductCard({ product, addToCart }) {
           <div className="flex justify-between items-start mb-2">
             <div>
               <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">
-                {product.category}
+                {product.category?.name || product.category}
               </span>
               <h3 className="text-xl font-bold text-gray-900 mt-1 group-hover:text-black transition-colors">
                 {product.name}
