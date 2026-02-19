@@ -138,3 +138,111 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ message: "Product deletion failed" });
   }
 };
+
+export const updateProduct = async (req, res) => {
+  const uploadedIds = [];
+
+  try {
+    const { slug } = req.params;
+    const { name, price, description, categoryName, subCategoryName, stock } =
+      req.body;
+
+    const product = await Product.findOne({ slug });
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    let category = product.category;
+    let subCategory = product.subCategory;
+    let categorySlug;
+    let subCategorySlug;
+
+    if (categoryName) {
+      const cat = await Category.findOne({
+        name: new RegExp(`^${categoryName}$`, "i"),
+      });
+      if (!cat) return res.status(400).json({ message: "Invalid category" });
+
+      category = cat._id;
+      categorySlug = cat.slug;
+    } else {
+      const cat = await Category.findById(product.category);
+      categorySlug = cat.slug;
+    }
+
+    if (subCategoryName) {
+      const sub = await SubCategory.findOne({
+        name: new RegExp(`^${subCategoryName}$`, "i"),
+        category,
+      });
+      if (!sub) return res.status(400).json({ message: "Invalid subcategory" });
+
+      subCategory = sub._id;
+      subCategorySlug = sub.slug;
+    } else {
+      const sub = await SubCategory.findById(product.subCategory);
+      subCategorySlug = sub.slug;
+    }
+
+    let newImages = null;
+
+    if (req.files && req.files.length > 0) {
+      const newSlug = name
+        ? name
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, "-")
+        : product.slug;
+
+      const folderPath = `optical-store/${categorySlug}/${subCategorySlug}/${newSlug}`;
+
+      const uploads = await Promise.all(
+        req.files.map((file) => uploadToCloudinary(file.buffer, folderPath)),
+      );
+
+      newImages = uploads.map((r) => {
+        uploadedIds.push(r.public_id);
+        return { public_id: r.public_id, url: r.secure_url };
+      });
+    }
+
+    if (name) {
+      product.name = name;
+      product.slug = name
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-");
+    }
+
+    if (price) product.price = price;
+    if (description) product.description = description;
+    if (stock !== undefined) product.stock = stock;
+
+    product.category = category;
+    product.subCategory = subCategory;
+
+    if (newImages) {
+      const oldImages = product.images;
+      product.images = newImages;
+
+      await product.save();
+
+      // deleting old images after save success
+      await Promise.all(
+        oldImages.map((img) => cloudinary.uploader.destroy(img.public_id)),
+      );
+    } else {
+      await product.save();
+    }
+
+    res.json({ success: true, product });
+  } catch (err) {
+    console.error(err);
+
+    if (uploadedIds.length > 0) {
+      await Promise.all(
+        uploadedIds.map((id) => cloudinary.uploader.destroy(id)),
+      );
+    }
+
+    res.status(500).json({ message: "Product update failed" });
+  }
+};
