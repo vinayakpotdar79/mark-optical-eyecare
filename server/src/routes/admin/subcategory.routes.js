@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.post("/subcategory", createSubCategory);
+router.post("/", createSubCategory);
 router.get("/subcategories", getSubCategoriesByCategory);
 
 export default router;

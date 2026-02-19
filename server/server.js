@@ -1,8 +1,6 @@
 import express from "express";
 import { connectDB } from "./src/utils/db.js";
-import productsRoute from "./src/routes/admin/products.routes.js";
-import categoryRoute from "./src/routes/admin/category.routes.js";
-import subcategoryRoute from "./src/routes/admin/subcategory.routes.js";
+import adminRoutes from "./src/routes/admin/index.js";
 import cors from "cors";
 
 const PORT = process.env.PORT || 3001;
@@ -10,14 +8,14 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.json());
 
-app.use(cors({
-  allowedOrigins: "http://localhost:5173",
-  credentials: true
-}))
+app.use(
+  cors({
+    allowedOrigins: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
-app.use("/api/v1/admin", productsRoute);
-app.use("/api/v1/admin", categoryRoute);
-app.use("/api/v1/admin", subcategoryRoute);
+app.use("/api/v1/admin", adminRoutes);
 
 app.get("/test", (_, res) => {
   res.status(200).json("Api working fine..");
