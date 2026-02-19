@@ -1,0 +1,20 @@
+### 
+
+GET http://localhost:3000/api/v1/admin/products/rayban-aviator HTTP/1.1
+
+
+### 
+
+GET http://localhost:3000/api/v1/admin/products HTTP/1.1
+
+
+### 
+
+PATCH http://localhost:3000/api/v1/admin/products/rayban-aviator HTTP/1.1
+Content-Type: application/json
+
+{
+  "price": 2999,
+  "stock": 20
+}
+
