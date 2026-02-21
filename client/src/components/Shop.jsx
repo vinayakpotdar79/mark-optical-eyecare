@@ -11,7 +11,7 @@ export default function Shop({ addToCart }) {
   const filteredProducts =
     filter === "All" ? products : products.filter((p) => p.category === filter);
 
-  const categories = ["All", "Sunglasses", "Spectacles", "Contact Lenses"];
+  const categories = ["Sunglasses", "Spectacles", "Contact Lenses"];
 
   return (
     <section id="shop" className="py-24 bg-gray-50">
