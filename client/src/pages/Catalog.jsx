@@ -16,7 +16,7 @@ export default function Catalog({ addToCart }) {
             try { //needed to fetch from client api ahead 
                 const [productsRes, categoriesRes] = await Promise.all([
                     api.get("/admin/products"),
-                    api.get("/admin/categories")
+                    api.get("/admin/category/categories")
                 ]);
                 setProducts(productsRes.data);
                 setCategories(categoriesRes.data);

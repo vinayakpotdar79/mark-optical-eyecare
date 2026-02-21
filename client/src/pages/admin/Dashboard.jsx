@@ -16,7 +16,7 @@ export default function AdminDashboard() {
             try {
                 const [productsRes, categoriesRes] = await Promise.all([
                     api.get("/admin/products"),
-                    api.get("/admin/categories")
+                    api.get("/admin/category/categories")
                 ]);
                 setProducts(productsRes.data);
                 setCategories(categoriesRes.data);
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                                     <td className="px-6 py-4 text-gray-600">
                                         {typeof product.category === 'object' ? product.category.name : product.category}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900">${product.price}</td>
+                                    <td className="px-6 py-4 font-medium text-gray-900">₹{product.price}</td>
                                     <td className="px-6 py-4">
                                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${product.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                             {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
@@ -140,9 +140,12 @@ export default function AdminDashboard() {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2">
-                                            <button className="p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                                            <Link
+                                                to={`/admin/products/edit/${product.slug}`}
+                                                className="p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors"
+                                            >
                                                 <Edit2 size={18} />
-                                            </button>
+                                            </Link>
                                             <button
                                                 onClick={() => handleDelete(product.slug || product.name.toLowerCase().replace(/ /g, '-'))}
                                                 className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"

@@ -19,7 +19,7 @@ export default function CategoryManager() {
     const fetchCategories = async () => {
         setLoadingCategories(true);
         try {
-            const res = await api.get("/admin/categories");
+            const res = await api.get("/admin/category/categories");
             setCategories(res.data);
         } catch (err) {
             console.error("Failed to fetch categories", err);
@@ -33,7 +33,7 @@ export default function CategoryManager() {
     const fetchSubCategories = async (categoryId) => {
         setLoadingSubCategories(true);
         try {
-            const res = await api.get(`/admin/subcategories?categoryId=${categoryId}`);
+            const res = await api.get(`/admin/subcategory/subcategories?categoryId=${categoryId}`);
             setSubCategories(res.data);
         } catch (err) {
             console.error("Failed to fetch subcategories", err);
