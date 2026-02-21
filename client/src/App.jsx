@@ -15,7 +15,7 @@ import CartDrawer from "./components/CartDrawer";
 import Checkout from "./components/Checkout";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
-import ProductForm from "./pages/admin/ProductForm";
+import CreateProductForm from "./pages/admin/CreateProductForm";
 import CategoryManager from "./pages/admin/CategoryManager";
 import Setting from "./pages/admin/Setting";
 import Catalog from "./pages/Catalog";
@@ -120,7 +120,8 @@ function AppContent() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="products" element={<AdminDashboard />} />
-              <Route path="products/new" element={<ProductForm />} />
+              <Route path="products/new" element={<CreateProductForm />} />
+              <Route path="products/edit/:slug" element={<CreateProductForm />} />
               <Route path="categories" element={<CategoryManager />} />
               <Route path="settings" element={<Setting />} />
             </Route>
