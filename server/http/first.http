@@ -31,4 +31,4 @@ Content-Type: application/json
 
 ### 
 
-GET localhost:3000/api/v1/admin/category/categories HTTP/1.1
+GET http://localhost:3000/api/v1/admin/category/categories HTTP/1.1

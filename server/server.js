@@ -1,6 +1,7 @@
 import express from "express";
 import { connectDB } from "./src/utils/db.js";
 import adminRoutes from "./src/routes/admin/index.js";
+import clientRoutes from "./src/routes/client/index.js";
 import cors from "cors";
 
 const PORT = process.env.PORT || 3001;
@@ -16,6 +17,7 @@ app.use(
 );
 
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/client", clientRoutes);
 
 app.get("/test", (_, res) => {
   res.status(200).json("Api working fine..");
