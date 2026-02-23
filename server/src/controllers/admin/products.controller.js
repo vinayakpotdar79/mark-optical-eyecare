@@ -3,6 +3,8 @@ import Category from "../../models/Category.js";
 import Product from "../../models/Products.js";
 import uploadToCloudinary from "../../utils/cloudinary/uploadFunction.js";
 import cloudinary from "../../utils/cloudinary/cloudinary.js";
+import redis from "../../redis/config.js";
+import { productKeys } from "../../utils/cacheKeys.js";
 
 export const createProduct = async (req, res) => {
   const uploadPublicIds = [];
@@ -88,6 +90,12 @@ export const getProductBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
 
+    const cachedProduct = await redis.get(productKeys.byId(slug));
+
+    if (cachedProduct) {
+      console.log("⚡ Product fetched from cache");
+      return res.json(JSON.parse(cachedProduct));
+    }
     const product = await Product.findOne({
       slug,
       isActive: true,
@@ -98,7 +106,8 @@ export const getProductBySlug = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-
+    console.log("🐢 Products fetched from database");
+    await redis.setex(productKeys.byId(slug), 60 * 60, JSON.stringify(product));//expire in 1 hour
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch product" });
@@ -108,10 +117,18 @@ export const getProductBySlug = async (req, res) => {
 // get all products
 export const getAllProducts = async (req, res) => {
   try {
+    const cachedProducts = await redis.get(productKeys.all);
+    console.log(cachedProducts);
+    if (cachedProducts) {
+      console.log("⚡ Products fetched from cache");
+      return res.json(JSON.parse(cachedProducts));
+    }
     const products = await Product.find({ isActive: true })
       .populate("category", "name slug")
       .populate("subCategory", "name slug");
 
+    console.log("🐢 Products fetched from database");
+    await redis.setex(productKeys.all, 60 * 60 * 24, JSON.stringify(products));//expire in 24 hours
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch products" });
@@ -187,9 +204,9 @@ export const updateProduct = async (req, res) => {
     if (req.files && req.files.length > 0) {
       const newSlug = name
         ? name
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9]+/g, "-")
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
         : product.slug;
 
       const folderPath = `optical-store/${categorySlug}/${subCategorySlug}/${newSlug}`;

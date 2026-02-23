@@ -1,5 +1,6 @@
 import express from "express";
 import { connectDB } from "./src/utils/db.js";
+import redis from "./src/redis/config.js";
 import adminRoutes from "./src/routes/admin/index.js";
 import clientRoutes from "./src/routes/client/index.js";
 import cors from "cors";
@@ -21,6 +22,14 @@ app.use("/api/v1/client", clientRoutes);
 
 app.get("/test", (_, res) => {
   res.status(200).json("Api working fine..");
+});
+
+redis.on('connect', () => {
+  console.log('✅ Redis connected successfully');
+});
+
+redis.on('error', (err) => {
+  console.log('❌ Redis connection error', err);
 });
 
 connectDB()
