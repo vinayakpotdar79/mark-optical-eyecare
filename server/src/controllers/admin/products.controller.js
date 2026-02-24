@@ -71,6 +71,8 @@ export const createProduct = async (req, res) => {
       stock,
       isActive: true,
     });
+    //delete all products of cache on create 
+    await redis.del(productKeys.all);
 
     res.status(201).json({ success: true, product });
   } catch (err) {
@@ -118,7 +120,6 @@ export const getProductBySlug = async (req, res) => {
 export const getAllProducts = async (req, res) => {
   try {
     const cachedProducts = await redis.get(productKeys.all);
-    console.log(cachedProducts);
     if (cachedProducts) {
       console.log("⚡ Products fetched from cache");
       return res.json(JSON.parse(cachedProducts));
@@ -149,6 +150,10 @@ export const deleteProduct = async (req, res) => {
     );
 
     await product.deleteOne();
+
+    //delete all products of cache on delete product
+    await redis.del(productKeys.all);
+    await redis.del(productKeys.byId(slug));
 
     res.json({ success: true, message: "Product deleted" });
   } catch (err) {
@@ -249,6 +254,9 @@ export const updateProduct = async (req, res) => {
     } else {
       await product.save();
     }
+    //delete all products of cache on update product
+    await redis.del(productKeys.all);
+    await redis.del(productKeys.byId(slug));
 
     res.json({ success: true, product });
   } catch (err) {
