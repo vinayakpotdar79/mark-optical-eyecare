@@ -1,5 +1,7 @@
 import SubCategory from "../../models/SubCategory.js";
 import Category from "../../models/Category.js";
+import redis from "../../redis/config.js";
+import { categoryKeys } from "../../utils/cacheKeys.js";
 
 export const createSubCategory = async (req, res) => {
   try {
@@ -41,6 +43,9 @@ export const createSubCategory = async (req, res) => {
       category: category._id,
     });
 
+    //delete all subcategories of cache on create subcategory
+    await redis.del(categoryKeys.subCategories(category._id));
+
     res.status(201).json({ success: true, subCategory });
   } catch (err) {
     res.status(500).json({ message: "Failed to create subcategory" });
@@ -54,12 +59,17 @@ export const getSubCategoriesByCategory = async (req, res) => {
     if (!categoryId) {
       return res.status(400).json({ message: "categoryId is required" });
     }
-
+    const cachedSubCategories = await redis.get(categoryKeys.subCategories(categoryId));
+    if (cachedSubCategories) {
+      console.log("⚡ subcategories fetched from cache");
+      return res.json(JSON.parse(cachedSubCategories));
+    }
     const subCategories = await SubCategory.find(
       { category: categoryId },
       "_id name slug",
     );
-
+    console.log("🐢 subcategories fetched from database");
+    await redis.setex(categoryKeys.subCategories(categoryId), 60 * 60, JSON.stringify(subCategories));
     res.json(subCategories);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch subcategories" });

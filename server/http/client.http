@@ -13,4 +13,5 @@ GET http://localhost:3000/api/v1/client/category/categories HTTP/1.1
 
 ### 
 
-# GET http://localhost:3000/api/v1/client/subcategory/subcategories?categoryId=698aed915e180b58506733c6 HTTP/1.1
+## get subcategories by category id
+GET http://localhost:3000/api/v1/client/subcategory/subcategories?categoryId=698aed915e180b58506733c6 HTTP/1.1 
